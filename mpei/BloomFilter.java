@@ -1,5 +1,7 @@
 package mpei;
 
+import java.util.*;
+
 public class BloomFilter {  // counting bloom filter
 	private int[] filter;
 	private int k;			// number of hash functions to be used 
@@ -16,22 +18,19 @@ public class BloomFilter {  // counting bloom filter
 		this.size = 0;
 		this.values_a = new int[k];
 		this.values_b = new int[k];
-	}
-	
-	public void generate_values() {
 		for(int i = 0; i < k; i++) {
 			values_a[i] = (int) (Math.random() * 40) + 1;
 			values_b[i] = (int) (Math.random() * 40) + 1;
 		}
-	}
+	} 
 	
 	
 	public void insert(String s) {
-		int[] temp = HashFunction.func(s, values_a, values_b);;
-		for (int i = 0; i < temp.length; i++) {
-			if(validIndex(temp[i])) {
+		int[] hash = HashFunction.func(s, values_a, values_b);
+		for (int i = 0; i < hash.length; i++) {
+			if(validIndex(hash[i])) {
 				if(size < capacity) {
-					filter[temp[i]] += 1;	
+					filter[hash[i]] += 1;	
 					size++;
 					System.out.println("Adicionou");
 				}else {
@@ -49,24 +48,24 @@ public class BloomFilter {  // counting bloom filter
 		return false;
 	}
 	
-	public boolean isMember(String s) { 						// isto nao ta a funcionar bem -- pensar melhor nisso
-		int[] temp = HashFunction.func(s, values_a, values_b);
-		for (int i = 0; i < temp.length; i++) {
-			if(validIndex(temp[i])) {
-				if(filter[temp[i]] >= 1){
-					return true;
+	public boolean isMember(String s) { 						// isto nao ta a funcionar bem -- pensar melhor nisto
+		int[] hash = HashFunction.func(s, values_a, values_b);
+		for (int i = 0; i < hash.length; i++) {
+			if(validIndex(hash[i])) {
+				if(filter[hash[i]] < 1){
+					return false;
 				}
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	public void remove(String s) {
-		int[] temp = HashFunction.func(s, values_a, values_b);
-		for (int i = 0; i < values_a.length; i++) {
-			if(validIndex(temp[i])) {
-				if(filter[temp[i]] >= 1) {
-					filter[temp[i]] -= 1;
+		int[] hash = HashFunction.func(s, values_a, values_b);
+		for (int i = 0; i < hash.length; i++) {
+			if(validIndex(hash[i])) {
+				if(filter[hash[i]] >= 1) {
+					filter[hash[i]] -= 1;
 					size--;
 					System.out.println("Removido com sucesso!");
 				}
@@ -81,9 +80,14 @@ public class BloomFilter {  // counting bloom filter
 	public int getK() { return k; }
 	
 	public int getCapacity() { return capacity; }
-	
-	public String toString() {   // nao ta a escrever
-		return "BloomFilter";
+
+	@Override
+	public String toString() {
+		return "BloomFilter [filter=" + Arrays.toString(filter) + ", k=" + k + ", size=" + size + ", capacity="
+				+ capacity + ", values_a=" + Arrays.toString(values_a) + ", values_b=" + Arrays.toString(values_b)
+				+ "]";
 	}
+	
+	
 	
 }
