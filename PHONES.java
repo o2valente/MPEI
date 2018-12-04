@@ -20,7 +20,8 @@ public enum PHONES {
 	HUAWEI_P20PRO(17),
 	XIAOMI_A2(18),
 	POCOPHONE(19),
-	SAMSUNG_S8(20);
+	SAMSUNG_S8(20),
+	REDMIS2(21);
 	
 	
 	private int index;

@@ -8,15 +8,17 @@ public class CreateFile {
 		File f = new File("src/mpei/phones.txt");
 		BufferedWriter bw = new BufferedWriter(new FileWriter(f));
 		
-		int tele, price = 0;
+		int tele, price, store = 0;
 		for(int i = 0; i < 1000; i++) {
 			
-			tele = (int) (Math.random() * 19) + 1;
+			store = (int) (Math.random() * 4) + 1;
+			tele = (int) (Math.random() * 20) + 1;
 			price = (int) (Math.random() * 600) + 200;	
 			
 			PHONES[] p = PHONES.values();
+			STORES[] stores = STORES.values();
 			
-			bw.write(p[tele] + "\t" + price + "\n");
+			bw.write(stores[store] + "\t" + p[tele] + "\t" + price + "\n");
 			bw.newLine();
 		}
 		
