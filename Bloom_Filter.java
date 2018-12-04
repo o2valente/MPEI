@@ -1,45 +1,64 @@
-package MPEI;					// Counting Bloom Filter
+package Projeto;
+
 public class Bloom_Filter {
 	
 	private int[] bloom_filter;
+	private int size;
 	private int numHash;
 	
-	public Bloom_Filter(int size, int numHash){		// Inicializar o Counting Bloom Filter;
+	public Bloom_Filter(int size,int numHash) {
+		this.size = size;
+		this.numHash= numHash;
 		bloom_filter = new int[size];
-		this.numHash = numHash;
 	}
 	
-	// Adicionar um elemento á String
-	
-	public void addElement(String value) {
-
+	public void addElement(String value) {  	// DJB2 HashFunction
+		int index = 5381;
 		for(int i = 0; i < numHash; i++) {
-			value += i;
-			int hash = Math.abs(value.hashCode());
-			hash = Math.abs(hash % bloom_filter.length);
-			bloom_filter[hash]++;
+			index += i;
+			for(int j = 0; j < value.length(); j++) {
+				index = ((index << 5) + index) + value.charAt(j);
+				index = index % bloom_filter.length;
+			}
+			bloom_filter[index]++;
 		}
 	}
 	
-	/*Checks if a string is a member
-	*There are false positives
-	*There are no false negatives
-	That means the output of isMember(String,int) is either false or maybe
-	*/
-	public boolean contains(String elem) {
+	public boolean contains(String value) {   // Verificar se determinado
+		int index = 5381;				      // valor pertence ao conjunto
 		
-		boolean member = true;
-		String str = elem;
-		
-		for(int i = 1; i <= numHash; i++) {
-			str += i;
-			int hash = Math.abs(str.hashCode());
-			hash = Math.abs(hash % set.length);
-			if(!set[hash]) {
-				member = false;
+		for(int i=0; i<numHash; i++) {
+			index += i;
+			for(int j = 0; j < value.length(); j++) {
+				index = ((index << 5) + index) + value.charAt(j);
+				index = index % bloom_filter.length;
+			}
+	        
+			if(bloom_filter[index] == 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
+	public void counterBloom_Filter(String value) {
+		int index = 5381;						// Conta a quantida de vezes
+		int contador = 0;					// que determinado elemento ocorre no conjunto
+		for(int i=0; i<numHash; i++) {
+			index += i;
+			for(int j = 0; j < value.length(); j++) {
+				index = ((index << 5) + index) + value.charAt(j);
+				index = index % bloom_filter.length;	
+			}
+			if(i == 0) {
+				contador = bloom_filter[index];
+			}
+			else if(bloom_filter[index] != contador) { 
+				contador = 0;
 				break;
 			}
 		}
-		return member;
+		System.out.println(bloom_filter[index]);
 	}
 }
