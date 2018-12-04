@@ -1,13 +1,11 @@
-package Projeto;
+package mpei;
 
 public class Bloom_Filter {
 	
 	private int[] bloom_filter;
-	private int size;
 	private int numHash;
 	
 	public Bloom_Filter(int size,int numHash) {
-		this.size = size;
 		this.numHash= numHash;
 		bloom_filter = new int[size];
 	}
