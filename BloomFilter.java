@@ -32,7 +32,6 @@ public class BloomFilter {  // counting bloom filter
 				if(size < capacity) {
 					filter[hash[i]] += 1;	
 					size++;
-					System.out.println("Adicionou");
 				}else {
 					System.out.println("Filtro cheio!");
 				}
@@ -40,6 +39,7 @@ public class BloomFilter {  // counting bloom filter
 				System.out.println("Index invalido!");
 			}
 		}
+		System.out.println("Adicionado com sucesso ao BloomFilter");
 	}
 
 	private boolean validIndex(int index) {
@@ -48,7 +48,7 @@ public class BloomFilter {  // counting bloom filter
 		return false;
 	}
 	
-	public boolean isMember(String s) { 						// isto nao ta a funcionar bem -- pensar melhor nisto
+	public boolean isMember(String s) { 
 		int[] hash = HashFunction.func(s, values_a, values_b, filter.length);
 		for (int i = 0; i < hash.length; i++) {
 			if(validIndex(hash[i])) {
@@ -60,17 +60,35 @@ public class BloomFilter {  // counting bloom filter
 		return true;
 	}
 	
-	public void remove(String s) {
+	public void countValue(String s) {
+		int count = 0;
 		int[] hash = HashFunction.func(s, values_a, values_b, filter.length);
-		for (int i = 0; i < hash.length; i++) {
-			if(validIndex(hash[i])) {
-				if(filter[hash[i]] >= 1) {
-					filter[hash[i]] -= 1;
-					size--;
-					System.out.println("Removido com sucesso!");
-				}
+		for(int i = 0; i < hash.length; i++) {
+			if(i == 0) {
+				count = filter[hash[i]];
+			}
+			else if(filter[hash[i]] != count) {
+				count = 0; break;
 			}
 		}
+		System.out.println(count);
+	}
+	
+	public void remove(String s) {
+		if(isMember(s)) {
+			int[] hash = HashFunction.func(s, values_a, values_b, filter.length);
+			for (int i = 0; i < hash.length; i++) {
+				if(validIndex(hash[i])) {
+					if(filter[hash[i]] >= 1) {
+						filter[hash[i]] -= 1;
+						size--;
+					}
+				}
+			}
+		}else {
+			System.out.println("A String nao esta no BloomFilter, impossivel remover!");
+		}
+		System.out.println("Removido com sucesso!");
 	}
 
 	public int getSize() {

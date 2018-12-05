@@ -19,9 +19,9 @@ public class TestCounter {
 		for (int i = 0; i < result.length; i++) {
 			int erro = Math.abs(expected - result[i]);
 			erroTotal += erro;
-			System.out.printf("%2d | %7d | %d \n", i, result[i], erro);
+			System.out.printf("%2d | %7d | %4d | \n", i, result[i], erro);
 		}
-		System.out.println("----------------------");
+		System.out.println("---------------------");
 		System.out.println("Media de erro -> " + erroTotal/100);
 		System.out.println("Percentagem de erro -> " + ((double) erroTotal)/1000000 + "%");
 	}

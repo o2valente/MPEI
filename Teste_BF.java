@@ -4,11 +4,10 @@ import java.util.*;
 
 public class Teste_BF {
 	
-	static Bloom_Filter bf = new Bloom_Filter(1000,3);
-	
+	static BloomFilter filter = new BloomFilter(10, 100000);
 	
 	public static void main(String[] args) {	
-		int escolha;
+		int escolha = 0;
 		
 		Scanner menu = new Scanner(System.in);
 			
@@ -16,14 +15,21 @@ public class Teste_BF {
 			System.out.println("|-----------------------------------------------|");
 			System.out.println("|              Teste BloomFilter                |");
 			System.out.println("|-----------------------------------------------|");
-			System.out.println("| 1 - Adicionar valores.                        |");
-			System.out.println("| 2 - Verificar se valor pertence.              |");
-			System.out.println("| 3 - Contar quantas vezes aparece o valor.     |");
-			System.out.println("| 4 - Testar BloomFilter com strings aleatorias |");
-			System.out.println("| 5 - Sair do programa                          |");
+			System.out.println("| 1 - Adicionar valores                         |");
+			System.out.println("| 2 - Verificar se valor pertence               |");
+			System.out.println("| 3 - Contar quantas vezes aparece o valor      |");
+			System.out.println("| 4 - Remover valor                             |");
+			System.out.println("| 5 - Testar BloomFilter com strings aleatorias |");
+			System.out.println("| 6 - Sair do programa                          |");
 			System.out.println("|_______________________________________________|");
 			
-			escolha = menu.nextInt();
+			System.out.print("Escolha: ");		
+			
+			try {
+				escolha = menu.nextInt();
+			}catch(Exception e) {
+				System.err.println("Insira um numero!");
+			}
 			
 			switch(escolha) {
 			
@@ -43,11 +49,16 @@ public class Teste_BF {
 				break;
 			}
 			case 4: {
+				remove();
+				escolha = 0;
+				break;
+			}
+			case 5: {
 				testBloom();
 				escolha = 0;
 				break;
 			}
-			case 5: System.exit(0);
+			case 6: System.exit(0);
 			default: 
 				escolha = 0;
 			}
@@ -62,8 +73,7 @@ public class Teste_BF {
 		
 		System.out.println("Valor: ");
 		valor = introduz.next();
-		bf.addElement(valor);
-		introduz.close();
+		filter.insert(valor);
 	}
 
 	public static void verificar() {
@@ -73,7 +83,7 @@ public class Teste_BF {
 		System.out.println("Verificar: ");
 		verificar = verScan.next();
 		
-		if(bf.contains(verificar) == false) {
+		if(filter.isMember(verificar) == false) {
 			
 			System.out.println("Nao contem");
 		}
@@ -81,7 +91,13 @@ public class Teste_BF {
 			System.out.println("Contem");
 		}
 		
-		verScan.close();
+	}
+	
+	public static void remove() {
+		Scanner rem = new Scanner(System.in);
+		System.out.println("Remover: ");
+		String s = rem.nextLine();
+		filter.remove(s);
 	}
 	
 	public static void contar() {
@@ -90,9 +106,8 @@ public class Teste_BF {
 		System.out.println("Valor: ");
 		
 		contar = count.next();
-		bf.counterBloom_Filter(contar);
+		filter.countValue(contar);
 		
-		count.close();
 	}
 	
 	private static String randomString(int size) {
@@ -100,7 +115,7 @@ public class Teste_BF {
 		String s = "";
 		
 		for(int i = 0; i < size; i++) {
-			int rand = (int) Math.random() + alphabet.length() - 1;
+			int rand = (int) (Math.random() * alphabet.length());
 			char c = alphabet.charAt(rand);
 			s += "" + c;
 		}
@@ -108,22 +123,26 @@ public class Teste_BF {
 		return s;
 	}
 	
-	public static void testBloom() {
-		System.out.println("Testar BloomFilter");
+	public static void testBloom() {					// insere 100 strings aleatorias ao bloomfilter e
+		System.out.println("Testar BloomFilter");		// verifica de outras 1000000 strings pertencem ao bloom
 		
 		for(int i = 0; i < 100; i++) {
 			String temp = randomString(50);
-			bf.addElement(temp);
+			filter.insert(temp);
 		}
 		
 		int falsePositives = 0;
-		for(int i = 0; i < 100000; i++) {
-			String rand = randomString(40);
-			if(bf.contains(rand)) {
+		System.out.println("Verificando...");
+		for(int i = 0; i < 1000000; i++) {
+			String rand = randomString(50);
+			if(filter.isMember(rand)) {
 				falsePositives++;
 			}
 		}
+		System.out.println("Terminado!\n");
 		
-		System.out.println("Falsos positivos em 100000 strings aleatorias: " + falsePositives);
+		System.out.println("Falsos positivos em 1000000 strings aleatorias: " + falsePositives);
+		double percentagem = ((double) falsePositives )/10000000 ;
+		System.out.printf("Percentagem de falsos positivos: %1.7f %%  \n", percentagem);
 	}
 }
