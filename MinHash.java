@@ -2,60 +2,65 @@ package mpei;
 import java.util.*;
 
 public class MinHash {
-	private int[] record;
-	List<String> minhash = new ArrayList<>();
-	private final int shingLength = 5;
+	private final int shingLength = 3;
+	private final double threshold = 0.4;
 	private int numHash;
 	private List<Elemento> elem;
+	private int[] values_a;
+	private int[] values_b;
 	
 	public MinHash(int numHash) {
 		this.numHash = numHash;
 		this.elem = new ArrayList<>();
-		record = new int[numHash];
-		for(int i = 0; i < numHash; i++) {	
-			record[i] = -1;
+		this.values_a = new int[numHash];
+		this.values_b = new int[numHash];
+		for(int i = 0; i < numHash; i++) {
+			values_a[i] = (int) (Math.random() * 104728) + 1;
+			values_b[i] = (int) (Math.random() * 104728) + 1;
 		}
 	}
 	
 	public void add(String texto) {
+		elem.add(GetMinHash(texto));
+	}
+	
+	public Elemento GetMinHash(String texto) {
+		Elemento e = new Elemento(texto, numHash);
 
-		for(int i = 0;i < texto.length(); i++) {
+		for(int i = 0; i < texto.length() - shingLength; i++) {
 			String shingle = "";
 			
 			for(int j = 0; j < shingLength; j++) {
 				shingle += texto.charAt(i + j);
-				
-				elem.add(GetMinHash(shingle));
-				
-			}	
+			}
+			
+			int[] hashes = HashFunction.func(shingle, values_a, values_b);
+			for(int j = 0; j<hashes.length; j++) {
+				if(e.getRecord(j) > hashes[j] || e.getRecord(j) == -1) {
+					e.setRecord(j, hashes[j]);
+				}
+			}
 		}
+				
+		return e;
 	}
 	
-	
-	private Elemento GetMinHash(String shingle) {
-		for(int k = 0; k < numHash; k++) {
-			int hash = HashFunction.func(shingle);
-			if(record[k] == -1) record[k] = hash;
-			else if(hash < record[k])record[k] = hash;
-		}
-		return new Elemento(shingle,record);
-	}
-	
-	public boolean DistanciaJaccard(String alvo, double threshold) {
+	public boolean DistanciaJaccard(String alvo) {
 		Elemento elemAlvo = GetMinHash(alvo);
-		for(Elemento e : elem.toArray(new Elemento[0])){
+		for(Elemento e : elem){
 			int isEqual = 0;
 			for(int k = 0; k < numHash; k++) {
 				if(e.getRecord(k) == elemAlvo.getRecord(k)) {
 					isEqual++;
 				}
 			}
-			double distJaccard = (double) (isEqual/numHash); 
-			if(distJaccard > threshold) {
-				//System.out.printf("A %s é semelhante a uma String existente: %s \n", alvo,e.getString());
-				return true;
+			double distJaccard = 1 - ((double) isEqual/(double) numHash); 
+			
+			if(distJaccard < threshold) {
+				System.out.printf("%s --> semelhante a: %s  | Dist. Jaccard: %f\n", alvo, e.getString(), distJaccard);
 			}
 		}
+		System.out.println("Nenhum elemento semelhante encontrado!");
 		return false;
 	}
 	

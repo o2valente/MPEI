@@ -19,8 +19,8 @@ public class BloomFilter {  // counting bloom filter
 		this.values_a = new int[k];
 		this.values_b = new int[k];
 		for(int i = 0; i < k; i++) {
-			values_a[i] = (int) (Math.random() * 40) + 1;
-			values_b[i] = (int) (Math.random() * 40) + 1;
+			values_a[i] = (int) (Math.random() * 104728) + 1;
+			values_b[i] = (int) (Math.random() * 104728) + 1;
 		}
 	} 
 	

@@ -7,19 +7,16 @@ public class HashFunction { // (ax+b) % p -> a e b aleatorios, x inteiro (hashco
 		for(int i = 0; i < hash.length; i++) {
 			int p = 104729; 											// primo grande
 			hash[i] = Math.abs((((a[i] * (s.hashCode()) + b[i]) % p) % length));
-			//hash[i] = ((a[i] * (s.hashCode()) + b[i]) % p);
-			System.out.println(hash[i]);
 		}			
 		return hash;
 	}
 	
-	public static int func(String s) {
-		int hash = 0;
-		int p = 104729;	// primo grande
-		int a = 40;  // Alterar mais tarde
-		int b = 40;  // Alterar mais tard
-		hash = Math.abs((((a * (s.hashCode()) + b) % p)));
-		
+	public static int[] func(String s, int[] a, int[] b) {
+		int[] hash = new int[a.length];
+		for(int i = 0; i < hash.length; i++) {
+			int p = 104729; 											// primo grande
+			hash[i] = Math.abs((((a[i] * (s.hashCode()) + b[i]) % p)));
+		}			
 		return hash;
 	}
 }

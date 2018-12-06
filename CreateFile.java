@@ -19,7 +19,7 @@ public class CreateFile {
 			STORES[] stores = STORES.values();
 			
 			bw.write(stores[store] + "\t" + p[tele] + "\t" + price + "\n");
-			bw.newLine();
+			//bw.newLine();
 		}
 		
 		

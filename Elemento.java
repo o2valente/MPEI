@@ -4,13 +4,19 @@ public class Elemento {
 	private int[] record;
 	private String string;
 	
-	public Elemento(String string,int[]record) {
+	public Elemento(String string, int numHash) {
 		this.string = string;
-		this.record = record;
+		record = new int[numHash];
+		for(int i = 0; i < numHash; i++) {	
+			record[i] = -1;
+		}
 	}
 
 	public int getRecord(int index) {
 		return record[index];
+	}
+	public void setRecord(int index, int value) {
+		record[index] = value;
 	}
 
 	public String getString() {

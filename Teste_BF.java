@@ -126,7 +126,7 @@ public class Teste_BF {
 	public static void testBloom() {					// insere 100 strings aleatorias ao bloomfilter e
 		System.out.println("Testar BloomFilter");		// verifica de outras 1000000 strings pertencem ao bloom
 		
-		for(int i = 0; i < 100; i++) {
+		for(int i = 0; i < 10000; i++) {
 			String temp = randomString(50);
 			filter.insert(temp);
 		}
@@ -143,6 +143,6 @@ public class Teste_BF {
 		
 		System.out.println("Falsos positivos em 1000000 strings aleatorias: " + falsePositives);
 		double percentagem = ((double) falsePositives )/10000000 ;
-		System.out.printf("Percentagem de falsos positivos: %1.7f %%  \n", percentagem);
+		System.out.printf("Percentagem de falsos positivos: %1.5f %%  \n", percentagem);
 	}
 }
