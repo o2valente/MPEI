@@ -1,4 +1,4 @@
-package Projeto;
+package mpei;
 
 public class HashFunction { // (ax+b) % p -> a e b aleatorios, x inteiro (hashcode da string), p numero primo "grande"
 	

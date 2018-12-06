@@ -1,4 +1,4 @@
-package Projeto;
+package mpei;
 import java.util.*;
 
 public class MinHash {
@@ -41,7 +41,7 @@ public class MinHash {
 		return new Elemento(shingle,record);
 	}
 	
-	public boolean DistanciaJaccard(String alvo) {
+	public boolean DistanciaJaccard(String alvo, double threshold) {
 		Elemento elemAlvo = GetMinHash(alvo);
 		for(Elemento e : elem.toArray(new Elemento[0])){
 			int isEqual = 0;
@@ -51,7 +51,7 @@ public class MinHash {
 				}
 			}
 			double distJaccard = (double) (isEqual/numHash); 
-			if(distJaccard > 0.6) {
+			if(distJaccard > threshold) {
 				//System.out.printf("A %s é semelhante a uma String existente: %s \n", alvo,e.getString());
 				return true;
 			}

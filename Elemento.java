@@ -1,5 +1,4 @@
-package Projeto;
-import java.util.*;
+package mpei;
 
 public class Elemento {
 	private int[] record;
