@@ -2,11 +2,19 @@ package Projeto;
 import java.util.*;
 
 public class Elemento {
-	private List<int[]> recorde = new ArrayList<>();
-	private List<String> string = new ArrayList<>();
+	private int[] record;
+	private String string;
 	
-	public Elemento(String string,int[]recorde) {
-		this.string.add(string);
-		this.recorde.add(recorde);
+	public Elemento(String string,int[]record) {
+		this.string = string;
+		this.record = record;
+	}
+
+	public int getRecord(int index) {
+		return record[index];
+	}
+
+	public String getString() {
+		return string;
 	}
 }

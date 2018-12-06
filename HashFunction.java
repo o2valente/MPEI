@@ -16,10 +16,11 @@ public class HashFunction { // (ax+b) % p -> a e b aleatorios, x inteiro (hashco
 	public static int func(String s) {
 		int hash = 0;
 		int p = 104729;	// primo grande
-		int a = (int) (Math.random() * 40) + 1;
-		int b = (int) (Math.random() * 40) + 1;
+		int a = 40;  // Alterar mais tarde
+		int b = 40;  // Alterar mais tard
 		hash = Math.abs((((a * (s.hashCode()) + b) % p)));
 		
 		return hash;
 	}
 }
+
