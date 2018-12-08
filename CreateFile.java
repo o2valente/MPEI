@@ -11,8 +11,8 @@ public class CreateFile {
 		int tele, price, store = 0;
 		for(int i = 0; i < 1000; i++) {
 			
-			store = (int) (Math.random() * 4) + 1;
-			tele = (int) (Math.random() * 20) + 1;
+			store = (int) (Math.random() * 5);
+			tele = (int) (Math.random() * 21);
 			price = (int) (Math.random() * 600) + 200;	
 			
 			PHONES[] p = PHONES.values();

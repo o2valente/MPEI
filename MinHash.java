@@ -3,7 +3,7 @@ import java.util.*;
 
 public class MinHash {
 	private final int shingLength = 3;
-	private final double threshold = 0.4;
+	private final double threshold = 0.6;
 	private int numHash;
 	private List<Elemento> elem;
 	private int[] values_a;
@@ -58,6 +58,7 @@ public class MinHash {
 			
 			if(distJaccard < threshold) {
 				System.out.printf("%s --> semelhante a: %s  | Dist. Jaccard: %f\n", alvo, e.getString(), distJaccard);
+				return true;
 			}
 		}
 		System.out.println("Nenhum elemento semelhante encontrado!");

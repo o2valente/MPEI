@@ -83,10 +83,11 @@ public class Test_MinHash {
 		try {
 			List<String> lines = Files.readAllLines(path);
 			
-			for(String line : lines) {
-				minhash.add(line);
-				System.out.println(line);
-			}
+			lines.stream().flatMap(x -> Arrays.stream(x.split("\t")))
+					      .forEach(x -> {
+					    	  minhash.add(x);
+					    	  System.out.println(x);
+					      });
 			return true;
 			
 		}catch(IOException e) {
