@@ -58,11 +58,32 @@ public class MinHash {
 			
 			if(distJaccard < threshold) {
 				System.out.printf("%s --> semelhante a: %s  | Dist. Jaccard: %f\n", alvo, e.getString(), distJaccard);
-				return true;
+				//return true;
 			}
 		}
 		System.out.println("Nenhum elemento semelhante encontrado!");
 		return false;
+	}
+	
+	public List<String> isMember(String alvo) {
+		List<String> members = new ArrayList<String>();
+		Elemento elemAlvo = GetMinHash(alvo);
+		System.out.println("\nSearching for \"" + alvo + "\":");
+		for(Elemento e : elem){
+			int isEqual = 0;
+			for(int k = 0; k < numHash; k++) {
+				if(e.getRecord(k) == elemAlvo.getRecord(k)) {
+					isEqual++;
+				}
+			}
+			double distJaccard = 1 - ((double) isEqual/(double) numHash); 
+			
+			if(distJaccard < threshold) {
+				//System.out.printf("%s --> found: %s  \n", alvo, e.getString());
+				members.add(e.getString());
+			}
+		}
+		return members;
 	}
 	
 }

@@ -21,7 +21,7 @@ public class Test_MinHash {
 			System.out.println("|-------------------------------------------------|");
 			System.out.println("| 1 - Adicionar valores                           |");
 			System.out.println("| 2 - Procurar                                    |");
-			System.out.println("| 3 - Ler ficheiro e apresentar valores identicos |");
+			System.out.println("| 3 - Ler ficheiro e procurar valores identicos   |");
 			System.out.println("| 4 - Sair do programa                            |");
 			System.out.println("|_________________________________________________|");
 			
@@ -71,7 +71,7 @@ public class Test_MinHash {
 	
 	public static void jaccard() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Procurar: ");
+		System.out.println("\nProcurar: ");
 		String s = sc.nextLine();
 		
 		minhash.DistanciaJaccard(s);
