@@ -8,11 +8,11 @@ import java.util.*;
 
 public class ProjectMain {
 	
-	static BloomFilter lojadaesquina = new BloomFilter(3, 1000);	//(k, capacity)
-	static BloomFilter phoneHouse = new BloomFilter(3, 1000); 
-	static BloomFilter cheapSales = new BloomFilter(3, 1000);
-	static BloomFilter tele4u = new BloomFilter(3, 1000);
-	static BloomFilter compraaqui = new BloomFilter(3, 1000);
+	static BloomFilter lojadaesquina = new BloomFilter(7, 1800);	//(k, capacity)
+	static BloomFilter phoneHouse = new BloomFilter(7, 1800); 
+	static BloomFilter cheapSales = new BloomFilter(7, 1800);
+	static BloomFilter tele4u = new BloomFilter(7, 1800);
+	static BloomFilter compraaqui = new BloomFilter(7, 1800);
 	
 	static EstocasticCounter esquinaCounter = new EstocasticCounter();
 	static EstocasticCounter houseCounter = new EstocasticCounter();
@@ -20,15 +20,20 @@ public class ProjectMain {
 	static EstocasticCounter teleCounter = new EstocasticCounter();
 	static EstocasticCounter compraCounter = new EstocasticCounter();
 	
+	static List<String> esquinaStock = new ArrayList<String>();
+	static List<String> phoneStock = new ArrayList<String>();
+	static List<String> cheapStock = new ArrayList<String>();
+	static List<String> teleStock = new ArrayList<String>();
+	static List<String> compraStock = new ArrayList<String>();
+	
 	static MinHash minhash = new MinHash(350);
 
 	public static void main(String[] args)  throws IOException {
-		int escolha = 0;	
 		
 		fillFilters();
 		
 		//######################################################
-		
+		int escolha = 0;
 		Scanner menu = new Scanner(System.in);
 			
 		do{
@@ -38,10 +43,11 @@ public class ProjectMain {
 			System.out.println("|-----------------------------------------------|");
 			System.out.println("| 1 - Ver ficheiro                              |");
 			System.out.println("| 2 - Ver telemoveis                            |");
-			System.out.println("| 3 - Ver stock de cada loja                    |"); 
-			System.out.println("| 4 - Procurar em todas as lojas                |");
-			System.out.println("| 5 - Procurar em uma loja                      |");
-			System.out.println("| 6 - Sair do programa                          |");
+			System.out.println("| 3 - Ver o numero stock de cada loja           |");
+			System.out.println("| 4 - Imprimir stock de uma loja                |");
+			System.out.println("| 5 - Procurar em todas as lojas                |");
+			System.out.println("| 6 - Procurar em uma loja                      |");
+			System.out.println("| 7 - Sair do programa                          |");
 			System.out.println("|_______________________________________________|");
 			
 			System.out.print("Escolha: ");		
@@ -70,17 +76,22 @@ public class ProjectMain {
 				break;
 			}
 			case 4:{
+				printStockByStore();
+				escolha = 0;
+				break;
+			}
+			case 5:{
 				allStores(pickPhone());
 				escolha = 0;
 				break;
 			}
-			case 5:{				
+			case 6:{				
 				pickStore();
 				escolha = 0;
 				break;
 			}
 
-			case 6: System.exit(0);
+			case 7: System.exit(0);
 			default: 
 				escolha = 0;
 			}
@@ -90,15 +101,15 @@ public class ProjectMain {
 
 	}
 	
-	public static void readFile(String fileName) {
+	public static void readFile(String fileName) throws IOException {
 		Path path = Paths.get("src/mpei/" + fileName);
 		try {
 			List<String> lines = Files.readAllLines(path);
 			lines.stream().forEach(line -> System.out.println(line));
 			
 		}catch(IOException e) {
-			System.out.println("\nNao foi possivel ler ficheiro!");
-			System.out.println(e);
+			CreateFile file = new CreateFile();		// cria um ficheiro phones.txt
+			file.createFile();
 		}
 		
 	}
@@ -118,28 +129,72 @@ public class ProjectMain {
 			minhash.add(split[1] + "\t" + split[2]); 				// adiciona todos à minhash
 			
 			if(split[0].equals("LOJADAESQUINA")) {					// adiciona ao bloomFilter de cada loja
-				lojadaesquina.insert(split[1] + "\t" + split[2]);
+				lojadaesquina.add(split[1] + "\t" + split[2]);
+				esquinaStock.add(split[1] + "\t" + split[2]);
 				esquinaCounter.increment();
 			}
 			else if(split[0].equals("PHONEHOUSE")) {
-				phoneHouse.insert(split[1] + "\t" + split[2]);
+				phoneHouse.add(split[1] + "\t" + split[2]);
+				phoneStock.add(split[1] + "\t" + split[2]);
 				houseCounter.increment();
 			}
 			else if(split[0].equals("COMPRAAQUI")) {
-				compraaqui.insert(split[1] + "\t" + split[2]);
+				compraaqui.add(split[1] + "\t" + split[2]);
+				compraStock.add(split[1] + "\t" + split[2]);
 				compraCounter.increment();
 			}
 			else if(split[0].equals("CHEAPSALES")) {
-				cheapSales.insert(split[1] + "\t" + split[2]);
+				cheapSales.add(split[1] + "\t" + split[2]);
+				cheapStock.add(split[1] + "\t" + split[2]);
 				cheapCounter.increment();
 			}
 			else if(split[0].equals("TELE4U")) {
-				tele4u.insert(split[1] + "\t" + split[2]);
+				tele4u.add(split[1] + "\t" + split[2]);
+				teleStock.add(split[1] + "\t" + split[2]);
 				teleCounter.increment();
 			}
 			else {
 				System.err.println("Something went wrong while filling the BloomFilters!");
 			}
+		}
+	}
+	
+	public static void printStockByStore() {
+		int o = printLojaMenu();
+		
+		switch(o) {
+		case 1: 
+			System.out.println("\n  Loja da Esquina");
+			System.out.println("--------------------");
+			esquinaStock.stream().forEach(string -> System.out.println(string + "€"));
+			o = 0;
+			break;
+		case 2:
+			System.out.println("\n     PhoneHouse");
+			System.out.println("--------------------");
+			phoneStock.stream().forEach(string -> System.out.println(string + "€"));
+			o = 0;
+			break;
+		case 3:
+			System.out.println("\n    Compra Aqui");
+			System.out.println("--------------------");
+			compraStock.stream().forEach(string -> System.out.println(string + "€"));
+			o = 0;
+			break;
+		case 4:
+			System.out.println("\n    Cheap Sales");
+			System.out.println("--------------------");
+			cheapStock.stream().forEach(string -> System.out.println(string + "€"));
+			o = 0;
+			break;
+		case 5:
+			System.out.println("\n      Tele4U");
+			System.out.println("--------------------");
+			teleStock.stream().forEach(string -> System.out.println(string + "€"));
+			o = 0;
+			break;
+		default: 
+			o = 0;
 		}
 	}
 	
@@ -208,26 +263,8 @@ public class ProjectMain {
 	}
 	
 	private static void pickStore() {
-		Scanner store = new Scanner(System.in);
-		int o = 0;
 		
-		System.out.println("\n|--------------------------------|");
-		System.out.println("| Em que loja pretende procurar? |");
-		System.out.println("|--------------------------------|");
-		System.out.println("| 1 - Loja da Esquina            |");
-		System.out.println("| 2 - PhoneHouse                 |");
-		System.out.println("| 3 - Compra Aqui                |");
-		System.out.println("| 4 - Cheap Sales                |");
-		System.out.println("| 5 - Tele4U                     |");
-		System.out.println("|________________________________|");
-		
-		System.out.println("Loja: ");
-		
-		try {
-			o = store.nextInt();
-		}catch(Exception e) {
-			System.err.println("Insira um numero!");
-		}
+		int o = printLojaMenu();
 		
 		switch(o) {
 		case 1:	{
@@ -276,6 +313,30 @@ public class ProjectMain {
 		System.out.println("Cheap Sales     : " + cheapCounter.getCounter() + " telemoveis disponiveis");
 		System.out.println("Tele4u          : " + teleCounter.getCounter() + " telemoveis disponiveis");
 		System.out.println("Compra Aqui     : " + compraCounter.getCounter() + " telemoveis disponiveis");
+	}
+	
+	private static int printLojaMenu() {
+		Scanner store = new Scanner(System.in);
+		int o = 0;
+		
+		System.out.println("\n|--------------------------------|");
+		System.out.println("| Em que loja pretende procurar? |");
+		System.out.println("|--------------------------------|");
+		System.out.println("| 1 - Loja da Esquina            |");
+		System.out.println("| 2 - PhoneHouse                 |");
+		System.out.println("| 3 - Compra Aqui                |");
+		System.out.println("| 4 - Cheap Sales                |");
+		System.out.println("| 5 - Tele4U                     |");
+		System.out.println("|________________________________|");
+		
+		System.out.println("Loja: ");
+		
+		try {
+			o = store.nextInt();
+		}catch(Exception e) {
+			System.err.println("Insira um numero!");
+		}
+		return o;
 	}
 
 }

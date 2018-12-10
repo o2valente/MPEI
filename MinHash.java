@@ -46,6 +46,7 @@ public class MinHash {
 	}
 	
 	public boolean DistanciaJaccard(String alvo) {
+		int find = 0;
 		Elemento elemAlvo = GetMinHash(alvo);
 		for(Elemento e : elem){
 			int isEqual = 0;
@@ -58,9 +59,10 @@ public class MinHash {
 			
 			if(distJaccard < threshold) {
 				System.out.printf("%s --> semelhante a: %s  | Dist. Jaccard: %f\n", alvo, e.getString(), distJaccard);
-				//return true;
+				find++;
 			}
 		}
+		if(find > 0) return true;
 		System.out.println("Nenhum elemento semelhante encontrado!");
 		return false;
 	}

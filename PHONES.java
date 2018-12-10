@@ -1,4 +1,4 @@
-package Projeto;
+package mpei;
 
 public enum PHONES {
 	HUAWEI_P20(1),

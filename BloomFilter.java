@@ -25,7 +25,7 @@ public class BloomFilter {  // counting bloom filter
 	} 
 	
 	
-	public void insert(String s) {
+	public void insert(String s) {													// para teste
 		int[] hash = HashFunction.func(s, values_a, values_b, filter.length);
 		for (int i = 0; i < hash.length; i++) {
 			if(validIndex(hash[i])) {
@@ -40,6 +40,22 @@ public class BloomFilter {  // counting bloom filter
 			}
 		}
 		System.out.println("Adicionado com sucesso ao BloomFilter");
+	}
+	
+	public void add(String s) {													// para main
+		int[] hash = HashFunction.func(s, values_a, values_b, filter.length);
+		for (int i = 0; i < hash.length; i++) {
+			if(validIndex(hash[i])) {
+				if(size < capacity) {
+					filter[hash[i]] += 1;	
+					size++;
+				}else {
+					System.out.println("Filtro cheio!");
+				}
+			}else {
+				System.out.println("Index invalido!");
+			}
+		}
 	}
 
 	private boolean validIndex(int index) {
