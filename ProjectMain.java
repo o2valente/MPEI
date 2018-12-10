@@ -38,11 +38,10 @@ public class ProjectMain {
 			System.out.println("|-----------------------------------------------|");
 			System.out.println("| 1 - Ver ficheiro                              |");
 			System.out.println("| 2 - Ver telemoveis                            |");
-			System.out.println("| 3 - Ver lojas                                 |");  // adicionar a informacao sobre o stock de cada loja (contador estocastico)
-			System.out.println("| 4 - Stock de cada loja                        |");  // juntar o 3 e 4 (maybe)
-			System.out.println("| 5 - Procurar em todas as lojas                |");
-			System.out.println("| 6 - Procurar em uma loja                      |");
-			System.out.println("| 7 - Sair do programa                          |");
+			System.out.println("| 3 - Ver stock de cada loja                    |"); 
+			System.out.println("| 4 - Procurar em todas as lojas                |");
+			System.out.println("| 5 - Procurar em uma loja                      |");
+			System.out.println("| 6 - Sair do programa                          |");
 			System.out.println("|_______________________________________________|");
 			
 			System.out.print("Escolha: ");		
@@ -55,7 +54,7 @@ public class ProjectMain {
 			
 			switch(escolha) {
 			case 1:	{
-				pickStore();
+				readFile("phones.txt");
 				escolha = 0;
 				break;
 			}
@@ -66,27 +65,22 @@ public class ProjectMain {
 				break;
 			}
 			case 3:{
-				printStores();
-				escolha = 0;
-				break;
-			}
-			case 4:{
 				printStock();
 				escolha = 0;
 				break;
 			}
-			case 5:{
+			case 4:{
 				allStores(pickPhone());
 				escolha = 0;
 				break;
 			}
-			case 6:{				
+			case 5:{				
 				pickStore();
 				escolha = 0;
 				break;
 			}
 
-			case 7: System.exit(0);
+			case 6: System.exit(0);
 			default: 
 				escolha = 0;
 			}
@@ -112,12 +106,6 @@ public class ProjectMain {
 	public static void printPhones() {
 		for(PHONES p : PHONES.values()) {
 			System.out.println(p);
-		}
-	}
-	
-	public static void printStores() {
-		for(STORES s : STORES.values()) {
-			System.out.println(s);
 		}
 	}
 	
@@ -283,11 +271,11 @@ public class ProjectMain {
 	
 	private static void printStock() {
 		System.out.println("\n--------------------Stock-------------------");
-		System.out.println("Loja da Esquina: " + esquinaCounter.getCounter() + " telemoveis disponiveis");
-		System.out.println("PhoneHouse     : " + houseCounter.getCounter() + " telemoveis disponiveis");
-		System.out.println("Cheap Sales    : " + cheapCounter.getCounter() + " telemoveis disponiveis");
-		System.out.println("Tele4u         : " + teleCounter.getCounter() + " telemoveis disponiveis");
-		System.out.println("Compra Aqui    : " + compraCounter.getCounter() + " telemoveis disponiveis");
+		System.out.println("Loja da Esquina : " + esquinaCounter.getCounter() + " telemoveis disponiveis");
+		System.out.println("PhoneHouse      : " + houseCounter.getCounter() + " telemoveis disponiveis");
+		System.out.println("Cheap Sales     : " + cheapCounter.getCounter() + " telemoveis disponiveis");
+		System.out.println("Tele4u          : " + teleCounter.getCounter() + " telemoveis disponiveis");
+		System.out.println("Compra Aqui     : " + compraCounter.getCounter() + " telemoveis disponiveis");
 	}
 
 }

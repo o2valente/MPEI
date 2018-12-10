@@ -3,7 +3,7 @@ import java.util.*;
 
 public class MinHash {
 	private final int shingLength = 3;
-	private final double threshold = 0.6;
+	private final double threshold = 0.8;
 	private int numHash;
 	private List<Elemento> elem;
 	private int[] values_a;
