@@ -19,7 +19,7 @@ public class TestCounter {
 		for (int i = 0; i < result.length; i++) {
 			int erro = Math.abs(expected - result[i]);
 			erroTotal += erro;
-			System.out.printf("%2d | %7d | %4d | \n", i, result[i], erro);
+			System.out.printf("%3d | %7d | %4d | \n", i + 1, result[i], erro);
 		}
 		System.out.println("---------------------");
 		System.out.println("Media de erro -> " + erroTotal/100);

@@ -123,7 +123,7 @@ public class Teste_BF {
 		return s;
 	}
 	
-	public static void testBloom() {					// insere 100 strings aleatorias ao bloomfilter e
+	public static void testBloom() {					// insere 10000 strings aleatorias ao bloomfilter e
 		System.out.println("Testar BloomFilter");		// verifica de outras 1000000 strings pertencem ao bloom
 		
 		for(int i = 0; i < 10000; i++) {
