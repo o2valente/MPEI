@@ -3,11 +3,11 @@ package mpei;
 public class TestCounter {
 
 	public static void main(String[] args) {
-		EstocasticCounter counter;
+		stochasticCounter counter;
 		int[] result = new int[100];
 		
 		for(int i = 0; i < 100; i++) {
-			counter = new EstocasticCounter();
+			counter = new stochasticCounter();
 			for(int j = 0; j < 1000000; j++) {
 				counter.increment();
 			}

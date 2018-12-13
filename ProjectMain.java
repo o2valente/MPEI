@@ -14,11 +14,11 @@ public class ProjectMain {
 	static BloomFilter tele4u = new BloomFilter(7, 1800);
 	static BloomFilter compraaqui = new BloomFilter(7, 1800);
 	
-	static EstocasticCounter esquinaCounter = new EstocasticCounter();
-	static EstocasticCounter houseCounter = new EstocasticCounter();
-	static EstocasticCounter cheapCounter = new EstocasticCounter();
-	static EstocasticCounter teleCounter = new EstocasticCounter();
-	static EstocasticCounter compraCounter = new EstocasticCounter();
+	static stochasticCounter esquinaCounter = new stochasticCounter();
+	static stochasticCounter houseCounter = new stochasticCounter();
+	static stochasticCounter cheapCounter = new stochasticCounter();
+	static stochasticCounter teleCounter = new stochasticCounter();
+	static stochasticCounter compraCounter = new stochasticCounter();
 	
 	static List<String> esquinaStock = new ArrayList<String>();
 	static List<String> phoneStock = new ArrayList<String>();
