@@ -78,7 +78,7 @@ public class Test_MinHash {
 		
 	}
 	
-	public static boolean readFile() {					// lê ficheiro e adiciona todas as linhas ao MinHash
+	public static boolean readFile() {					// lÃª ficheiro e adiciona todas as linhas ao MinHash
 		Path path = Paths.get("src/mpei/voos.txt");
 		try {
 			List<String> lines = Files.readAllLines(path);
