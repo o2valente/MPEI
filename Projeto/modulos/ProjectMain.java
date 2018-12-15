@@ -126,7 +126,7 @@ public class ProjectMain {
 		for(String line : lines) {
 			String[] split = line.split("\t");
 			
-			minhash.add(split[1] + "\t" + split[2]); 				// adiciona todos à minhash
+			minhash.add(split[1] + "\t" + split[2]); 				// adiciona todos Ã  minhash
 			
 			if(split[0].equals("LOJADAESQUINA")) {					// adiciona ao bloomFilter de cada loja
 				lojadaesquina.add(split[1] + "\t" + split[2]);
@@ -166,31 +166,31 @@ public class ProjectMain {
 		case 1: 
 			System.out.println("\n  Loja da Esquina");
 			System.out.println("--------------------");
-			esquinaStock.stream().forEach(string -> System.out.println(string + "€"));
+			esquinaStock.stream().forEach(string -> System.out.println(string + "â‚¬"));
 			o = 0;
 			break;
 		case 2:
 			System.out.println("\n     PhoneHouse");
 			System.out.println("--------------------");
-			phoneStock.stream().forEach(string -> System.out.println(string + "€"));
+			phoneStock.stream().forEach(string -> System.out.println(string + "â‚¬"));
 			o = 0;
 			break;
 		case 3:
 			System.out.println("\n    Compra Aqui");
 			System.out.println("--------------------");
-			compraStock.stream().forEach(string -> System.out.println(string + "€"));
+			compraStock.stream().forEach(string -> System.out.println(string + "â‚¬"));
 			o = 0;
 			break;
 		case 4:
 			System.out.println("\n    Cheap Sales");
 			System.out.println("--------------------");
-			cheapStock.stream().forEach(string -> System.out.println(string + "€"));
+			cheapStock.stream().forEach(string -> System.out.println(string + "â‚¬"));
 			o = 0;
 			break;
 		case 5:
 			System.out.println("\n      Tele4U");
 			System.out.println("--------------------");
-			teleStock.stream().forEach(string -> System.out.println(string + "€"));
+			teleStock.stream().forEach(string -> System.out.println(string + "â‚¬"));
 			o = 0;
 			break;
 		default: 
@@ -235,31 +235,31 @@ public class ProjectMain {
 	private static void esquinaPhones(String s, List<String> list) {
 		System.out.println("\n  Loja da Esquina");
 		System.out.println("--------------------");
-		list.stream().filter(x -> lojadaesquina.isMember(x)).forEach(x -> System.out.println(x + "€"));
+		list.stream().filter(x -> lojadaesquina.isMember(x)).forEach(x -> System.out.println(x + "â‚¬"));
 	}
 	
 	private static void housePhones(String s, List<String> list) {
 		System.out.println("\n     PhoneHouse");
 		System.out.println("--------------------");
-		list.stream().filter(x -> phoneHouse.isMember(x)).forEach(x -> System.out.println(x + "€"));
+		list.stream().filter(x -> phoneHouse.isMember(x)).forEach(x -> System.out.println(x + "â‚¬"));
 	}
 	
 	private static void compraPhones(String s, List<String> list) {
 		System.out.println("\n    Compra Aqui");
 		System.out.println("--------------------");
-		list.stream().filter(x -> compraaqui.isMember(x)).forEach(x -> System.out.println(x + "€"));
+		list.stream().filter(x -> compraaqui.isMember(x)).forEach(x -> System.out.println(x + "â‚¬"));
 	}
 	
 	private static void cheapPhones(String s, List<String> list) {
 		System.out.println("\n    Cheap Sales");
 		System.out.println("--------------------");
-		list.stream().filter(x -> cheapSales.isMember(x)).forEach(x -> System.out.println(x + "€"));
+		list.stream().filter(x -> cheapSales.isMember(x)).forEach(x -> System.out.println(x + "â‚¬"));
 	}
 	
 	private static void telePhones(String s, List<String> list) {
 		System.out.println("\n      Tele4U");
 		System.out.println("--------------------");
-		list.stream().filter(x -> tele4u.isMember(x)).forEach(x -> System.out.println(x + "€"));
+		list.stream().filter(x -> tele4u.isMember(x)).forEach(x -> System.out.println(x + "â‚¬"));
 	}
 	
 	private static void pickStore() {
